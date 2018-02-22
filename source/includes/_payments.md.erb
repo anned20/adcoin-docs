@@ -114,6 +114,11 @@ ID        | The ID of the payment to retrieve
 curl "<%= config('api_url') %>/payments"
   -X POST
   -H "X-AUTH-TOKEN: myApiKey"
+  -F "amount=100"
+  -F "redirectUrl=https://myapp.com/checkout/status"
+  -F "webhookUrl=https://myapp.com/checkout/webhook"
+  -F "description='500 advertisement credits'"
+  -F "metadata={\"name\": \"TestUser\"}"
 ```
 
 ```php

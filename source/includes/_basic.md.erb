@@ -1,0 +1,196 @@
+# Basic
+
+## Get account information
+
+```shell
+curl "<%= config('api_url') %>/me"
+  -H "X-AUTH-TOKEN: myApiKey"
+```
+
+```php
+<?php
+
+$headers = [
+  'X-AUTH-TOKEN: myApiKey',
+];
+
+$curl = curl_init("<%= config('api_url') %>/me");
+
+curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+$result = json_decode(curl_exec($curl));
+
+return $result;
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "name": "John Doe",
+  "email": "john@doe.com",
+  "type": "premium",
+  "address": "Avenue 1",
+  "postalCode": "21435",
+  "city": "New York",
+  "country": "United States"
+}
+```
+
+This endpoint retrieves basic account information.
+
+### HTTP Request
+
+`GET <%= config('api_url') %>/me`
+
+## Get balance
+
+```shell
+curl "<%= config('api_url') %>/balance"
+  -H "X-AUTH-TOKEN: myApiKey"
+```
+
+```php
+<?php
+
+$headers = [
+  'X-AUTH-TOKEN: myApiKey',
+];
+
+$curl = curl_init("<%= config('api_url') %>/balance");
+
+curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+$result = json_decode(curl_exec($curl));
+
+return $result;
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "balance": 1234
+}
+```
+
+This endpoint retrieves the balance.
+
+### HTTP Request
+
+`GET <%= config('api_url') %>/balance`
+
+## Get transactions
+
+```shell
+curl "<%= config('api_url') %>/transactions"
+  -H "X-AUTH-TOKEN: myApiKey"
+```
+
+```php
+<?php
+
+$headers = [
+  'X-AUTH-TOKEN: myApiKey',
+];
+
+$curl = curl_init("<%= config('api_url') %>/transactions");
+
+curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+$result = json_decode(curl_exec($curl));
+
+return $result;
+```
+
+> The above command returns JSON structured like this:
+
+```json
+[
+  {
+    "address": "AVBhENG4xQ8yMXNp36f731qNWGsdZwzA6A",
+    "category": "send",
+    "amount": -30,
+    "fee": 0,
+    "confirmations": 792,
+    "blockhash": "3900df4e8b437686cf30fb64667fbcba553fede0a8b2bf1ecc5dbca6c98a6b40",
+    "blockindex": 31,
+    "blocktime": 1515586376,
+    "txid": "f3f42c35528ece21e58d0be01b6f80839c9ce466ffeb54c83b07c9c100fd2f9b",
+    "normtxid": "890b5d999ce37ab542a1969c774a8d3d1347700b3d156f506768d046fd75bf6c",
+    "time": 1515609935,
+    "timereceived": 1515609935,
+    "confirmed": true
+  }
+]
+```
+
+This endpoint retrieves transactions.
+
+### HTTP Request
+
+`GET <%= config('api_url') %>/balance`
+
+## Pay AdCoin
+
+```shell
+curl "<%= config('api_url') %>/payto"
+  -X POST
+  -H "X-AUTH-TOKEN: myApiKey"
+  -F "amount=100"
+  -F "email=john@doe.com"
+```
+
+```php
+<?php
+
+$headers = [
+  'X-AUTH-TOKEN: myApiKey',
+];
+
+$curl = curl_init("<%= config('api_url') %>/payto");
+
+curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($curl, CURLOPT_POST, true);
+
+$parameters = [
+  'amount' => 100,
+  'email' => 'john@doe.com',
+];
+
+curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($parameters));
+
+$result = json_decode(curl_exec($curl));
+
+return $result;
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "transaction": "461ee445734f4fac4a367131b3e6275e7ce7df9fcccc3281edcf2703e8d5a9b9"
+}
+```
+
+This endpoint can be used to pay AdCoin to a email or address.
+
+<aside class="notice">
+Only one of <code>email</code> or <code>address</code> should be given
+</aside>
+
+### HTTP Request
+
+`POST <%= config('api_url') %>/payto`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+amount | The amount in AdCoin
+email | E-mail address to pay AdCoin to
+address | AdCoin address to pay AdCoin to

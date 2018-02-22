@@ -1,0 +1,84 @@
+# Addresses
+
+## Get all addresses
+
+```shell
+curl "<%= config('api_url') %>/addresses"
+  -H "X-AUTH-TOKEN: myApiKey"
+```
+
+```php
+<?php
+
+$headers = [
+  'X-AUTH-TOKEN: myApiKey',
+];
+
+$curl = curl_init("<%= config('api_url') %>/addresses");
+
+curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+$result = json_decode(curl_exec($curl));
+
+return $result;
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "addresses": [
+    "AeTJRy6saLLs4SHSHVmPYVTceweLVWyaS4"
+  ],
+  "hidden": [
+    "AcZXFBs3jPLwqSFvmcG89homfEzu2Njoem"
+  ]
+}
+```
+
+This endpoint retrieves all addresses.
+
+### HTTP Request
+
+`GET <%= config('api_url') %>/addresses`
+
+## Create address
+
+```shell
+curl "<%= config('api_url') %>/addresses"
+  -X POST
+  -H "X-AUTH-TOKEN: myApiKey"
+```
+
+```php
+<?php
+
+$headers = [
+  'X-AUTH-TOKEN: myApiKey',
+];
+
+$curl = curl_init("<%= config('api_url') %>/addresses");
+
+curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($curl, CURLOPT_POST, true);
+
+$result = json_decode(curl_exec($curl));
+
+return $result;
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "address": "AeCy55WtofiCtm21mg3cExiqyfXU2zJFqP"
+}
+```
+
+This endpoint creates a address.
+
+### HTTP Request
+
+`POST <%= config('api_url') %>/addresses`

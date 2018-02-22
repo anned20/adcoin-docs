@@ -1,0 +1,215 @@
+# Orders
+
+## Get all orders
+
+```shell
+curl "<%= config('api_url') %>/orders"
+  -H "X-AUTH-TOKEN: myApiKey"
+```
+
+```php
+<?php
+
+$headers = [
+  'X-AUTH-TOKEN: myApiKey',
+];
+
+$curl = curl_init("<%= config('api_url') %>/orders");
+
+curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+$result = json_decode(curl_exec($curl));
+
+return $result;
+```
+
+> The above command returns JSON structured like this:
+
+```json
+[
+  {
+    "euroAmount": 100,
+    "adCoinAmount": 200,
+    "createdAt": 1511616897
+  },
+  {
+    "euroAmount": 200,
+    "adCoinAmount": 400,
+    "createdAt": 1511617090
+  }
+]
+```
+
+This endpoint retrieves all orders.
+
+### HTTP Request
+
+`GET <%= config('api_url') %>/orders`
+
+## Create order
+
+```shell
+curl "<%= config('api_url') %>/orders"
+  -X POST
+  -H "X-AUTH-TOKEN: myApiKey"
+  -F "amount=100"
+  -F "idealIssuer=RABONL2U"
+  -F "paymentMethod=ideal"
+```
+
+```php
+<?php
+
+$headers = [
+  'X-AUTH-TOKEN: myApiKey',
+];
+
+$curl = curl_init("<%= config('api_url') %>/orders");
+
+curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($curl, CURLOPT_POST, true);
+
+$parameters = [
+  'amount' => 100,
+  'idealIssuer' => 'RABONL2U',
+  'paymentMethod' => 'ideal',
+];
+
+curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($parameters));
+
+$result = json_decode(curl_exec($curl));
+
+return $result;
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "redirectUrl": "https://urlofpaymentprovider.com/thatisusedtopay"
+}
+```
+
+This endpoint creates a order.
+
+### HTTP Request
+
+`POST <%= config('api_url') %>/payments`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+amount | The amount in euro
+paymentMethod | One of the paymentmethods returned by [/paymentmethods](#get-paymentmethods)
+idealIssuer | iDeal issuer, found in [/paymentmethods](#get-paymentmethods) (Only required if paymentMethod is iDeal)
+coin | Coin to use, found in [/paymentmethods](#get-paymentmethods) (Only required if paymentMethod is cryptocurrency)
+
+## Get paymentmethods
+
+```shell
+curl "<%= config('api_url') %>/paymentmethods"
+  -H "X-AUTH-TOKEN: myApiKey"
+```
+
+```php
+<?php
+
+$headers = [
+  'X-AUTH-TOKEN: myApiKey',
+];
+
+$curl = curl_init("<%= config('api_url') %>/paymentmethods");
+
+curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+$result = json_decode(curl_exec($curl));
+
+return $result;
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "paymentMethods": {
+    "mistercash": {
+      "code": "mistercash",
+      "label": "Bancontact"
+    },
+    "giropay": {
+      "code": "giropay",
+      "label": "GiroPay"
+    },
+    "ideal": {
+      "code": "ideal",
+      "label": "iDEAL",
+      "options": [
+        {
+          "key": "ABNANL2A",
+          "label": "ABN Amro Bank"
+        },
+        {
+          "key": "ASNBNL21",
+          "label": "ASN Bank"
+        },
+        {
+          "key": "BUNQNL2A",
+          "label": "bunq"
+        },
+        {
+          "key": "INGBNL2A",
+          "label": "ING"
+        },
+        {
+          "key": "KNABNL2H",
+          "label": "Knab"
+        },
+        {
+          "key": "RABONL2U",
+          "label": "Rabobank"
+        },
+        {
+          "key": "RBRBNL21",
+          "label": "RegioBank"
+        },
+        {
+          "key": "SNSBNL2A",
+          "label": "SNS Bank"
+        },
+        {
+          "key": "TRIONL2U",
+          "label": "Triodos Bank"
+        },
+        {
+          "key": "FVLBNL22",
+          "label": "Van Lanschot Bankiers"
+        }
+      ]
+    },
+    "sofortbanking": {
+      "code": "sofortbanking",
+      "label": "SofortBanking"
+    },
+    "cryptocurrency": {
+      "key": "cryptocurrency",
+      "label": "Cryptocurrency",
+      "options": [
+        {
+          "key": "BTC",
+          "label": "Bitcoin"
+        }
+      ]
+    }
+  }
+}
+```
+
+This endpoint retrieves all payment methods.
+
+### HTTP Request
+
+`GET <%= config('api_url') %>/paymentmethods`
