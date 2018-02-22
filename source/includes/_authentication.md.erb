@@ -1,0 +1,39 @@
+# Authentication
+
+> To authorize, use this code:
+
+```php
+<?php
+
+$headers = [
+  'X-AUTH-TOKEN: myApiKey',
+];
+
+$curl = curl_init("api_endpoint_here");
+
+curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+$result = json_decode(curl_exec($curl));
+
+return $result;
+```
+
+```shell
+curl "api_endpoint_here"
+  -H "X-AUTH-TOKEN: myApiKey"
+```
+
+> Make sure to replace `myApiKey` with your API key.
+
+The API uses API keys to allow access to the API. You can register your API key
+in the [Wallet](https://wallet.getadcoin.com), login/register open the menu on
+the top right and select API key
+
+The API expects the API key to be included in all API requests to the server in a header that looks like the following:
+
+`X-AUTH-TOKEN: myApiKey`
+
+<aside class="notice">
+You must replace <code>myApiKey</code> with your personal API key.
+</aside>

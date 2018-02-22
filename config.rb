@@ -45,7 +45,7 @@ configure :build do
   activate :minify_javascript
   # activate :relative_assets
   # activate :asset_hash
-  # activate :gzip
+  activate :gzip
 end
 
 # Deploy Configuration
@@ -54,4 +54,12 @@ set :port, 4567
 
 helpers do
   require './lib/toc_data.rb'
+
+  def config (key)
+    vars = {
+      "api_url" => "https://wallet.getadcoin.com/api"
+    }
+
+    vars[key]
+  end
 end

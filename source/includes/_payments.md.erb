@@ -1,0 +1,181 @@
+# Payments
+
+## Get all payments
+
+```shell
+curl "<%= config('api_url') %>/payments"
+  -H "X-AUTH-TOKEN: myApiKey"
+```
+
+```php
+<?php
+
+$headers = [
+  'X-AUTH-TOKEN: myApiKey',
+];
+
+$curl = curl_init("<%= config('api_url') %>/payments");
+
+curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+$result = json_decode(curl_exec($curl));
+
+return $result;
+```
+
+> The above command returns JSON structured like this:
+
+```json
+[
+  {
+    "id": "b43292ea-0f18-11e8-8dd3-0242ac130003",
+    "status": "open",
+    "created_at": "2018-02-11T10:45:41+00:00",
+    "expires_at": "2018-02-11T11:00:41+00:00",
+    "amount": 100,
+    "description": "500 advertisement credits",
+    "metadata": "{\"name\": \"TestUser\"}",
+    "address": "APNa7eDYEQzYAGb7PqrRGwSFLjCfFpwXrA",
+    "links": {
+      "redirectUrl": "http://myapp.com/checkout/status",
+      "webhookUrl": "http://myapp.com/checkout/webhook",
+      "paymentUrl": "http://wallet.getadcoin.com/pay/b43292ea-0f18-11e8-8dd3-0242ac130003"
+    }
+  }
+]
+```
+
+This endpoint retrieves all payments.
+
+### HTTP Request
+
+`GET <%= config('api_url') %>/payments`
+
+## Get a specific payment
+
+```curl
+curl "<%= config('api_url') %>/payments/b43292ea-0f18-11e8-8dd3-0242ac130003"
+  -H "X-AUTH-TOKEN: myApiKey"
+```
+
+```php
+<?php
+
+$headers = [
+  'X-AUTH-TOKEN: myApiKey',
+];
+
+$curl = curl_init("<%= config('api_url') %>/payments/b43292ea-0f18-11e8-8dd3-0242ac130003");
+
+curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+$result = json_decode(curl_exec($curl));
+
+return $result;
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "id": "b43292ea-0f18-11e8-8dd3-0242ac130003",
+  "status": "open",
+  "created_at": "2018-02-11T10:45:41+00:00",
+  "expires_at": "2018-02-11T11:00:41+00:00",
+  "amount": 100,
+  "description": "500 advertisement credits",
+  "metadata": "{\"name\": \"TestUser\"}",
+  "address": "APNa7eDYEQzYAGb7PqrRGwSFLjCfFpwXrA",
+  "links": {
+    "redirectUrl": "http://myapp.com/checkout/status",
+    "webhookUrl": "http://myapp.com/checkout/webhook",
+    "paymentUrl": "http://wallet.getadcoin.com/pay/b43292ea-0f18-11e8-8dd3-0242ac130003"
+  }
+}
+```
+
+This endpoint retrieves a specific payment.
+
+### HTTP Request
+
+`GET <%= config('api_url') %>/payments/<ID>`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+ID        | The ID of the payment to retrieve
+
+## Create payment
+
+```shell
+curl "<%= config('api_url') %>/payments"
+  -X POST
+  -H "X-AUTH-TOKEN: myApiKey"
+```
+
+```php
+<?php
+
+$headers = [
+  'X-AUTH-TOKEN: myApiKey',
+];
+
+$curl = curl_init("<%= config('api_url') %>/payments");
+
+curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($curl, CURLOPT_POST, true);
+
+$parameters = [
+  'amount' => 100,
+  'redirectUrl' => 'https://myapp.com/checkout/status',
+  'webhookUrl' => 'https://myapp.com/checkout/webhook',
+  'description' => '500 advertisement credits',
+  'metadata' => json_encode(['name' => 'TestUser']),
+];
+
+curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($parameters));
+
+$result = json_decode(curl_exec($curl));
+
+return $result;
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+  "id": "b43292ea-0f18-11e8-8dd3-0242ac130003",
+  "status": "open",
+  "created_at": "2018-02-11T10:45:41+00:00",
+  "expires_at": "2018-02-11T11:00:41+00:00",
+  "amount": 100,
+  "description": "500 advertisement credits",
+  "metadata": "{\"name\": \"TestUser\"}",
+  "address": "APNa7eDYEQzYAGb7PqrRGwSFLjCfFpwXrA",
+  "links": {
+    "redirectUrl": "http://myapp.com/checkout/status",
+    "webhookUrl": "http://myapp.com/checkout/webhook",
+    "paymentUrl": "http://wallet.getadcoin.com/pay/b43292ea-0f18-11e8-8dd3-0242ac130003"
+  }
+}
+```
+
+This endpoint creates a payment.
+
+### HTTP Request
+
+`POST <%= config('api_url') %>/payments`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+amount | The amount in AdCoin
+redirectUrl | Where the customer should be redirect after succesful payment
+webhookUrl | The URL that gets called when the payment status changes
+description | Description that is shown to the user at the payment page
+metadata | Metadata for your own reference, included in all further responses
