@@ -229,6 +229,23 @@
             <a href="#status-codes" class="toc-h1 toc-link" data-title="status-codes">Status codes</a>
           </li>
           <li>
+            <a href="#basic" class="toc-h1 toc-link" data-title="basic">Basic</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#get-account-information" class="toc-h2 toc-link" data-title="get-account-information">Get account information</a>
+                  </li>
+                  <li>
+                    <a href="#get-balance" class="toc-h2 toc-link" data-title="get-balance">Get balance</a>
+                  </li>
+                  <li>
+                    <a href="#get-transactions" class="toc-h2 toc-link" data-title="get-transactions">Get transactions</a>
+                  </li>
+                  <li>
+                    <a href="#pay-adcoin" class="toc-h2 toc-link" data-title="pay-adcoin">Pay AdCoin</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
             <a href="#payments" class="toc-h1 toc-link" data-title="payments">Payments</a>
               <ul class="toc-list-h2">
                   <li>
@@ -239,6 +256,31 @@
                   </li>
                   <li>
                     <a href="#create-payment" class="toc-h2 toc-link" data-title="create-payment">Create payment</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#orders" class="toc-h1 toc-link" data-title="orders">Orders</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#get-all-orders" class="toc-h2 toc-link" data-title="get-all-orders">Get all orders</a>
+                  </li>
+                  <li>
+                    <a href="#create-order" class="toc-h2 toc-link" data-title="create-order">Create order</a>
+                  </li>
+                  <li>
+                    <a href="#get-paymentmethods" class="toc-h2 toc-link" data-title="get-paymentmethods">Get paymentmethods</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#addresses" class="toc-h1 toc-link" data-title="addresses">Addresses</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#get-all-addresses" class="toc-h2 toc-link" data-title="get-all-addresses">Get all addresses</a>
+                  </li>
+                  <li>
+                    <a href="#create-address" class="toc-h2 toc-link" data-title="create-address">Create address</a>
                   </li>
               </ul>
           </li>
@@ -253,7 +295,7 @@
         <h1 id='introduction'>Introduction</h1>
 <p>This API is a way to interact with your AdCoin Wallet without using the provided interface</p>
 
-<p>We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.</p>
+<p>We have language bindings in Shell, and PHP! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.</p>
 <h1 id='authentication'>Authentication</h1>
 <blockquote>
 <p>To authorize, use this code:</p>
@@ -328,6 +370,169 @@ You must replace <code>myApiKey</code> with your personal API key.
 <tr>
 <td>503</td>
 <td>Service Unavailable -- We&#39;re temporarily offline for maintenance. Please try again later.</td>
+</tr>
+</tbody></table>
+<h1 id='basic'>Basic</h1><h2 id='get-account-information'>Get account information</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://wallet.getadcoin.com/api/me"</span>
+  -H <span class="s2">"X-AUTH-TOKEN: myApiKey"</span>
+</code></pre><pre class="highlight php tab-php"><code><span class="cp">&lt;?php</span>
+
+<span class="nv">$headers</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="s1">'X-AUTH-TOKEN: myApiKey'</span><span class="p">,</span>
+<span class="p">];</span>
+
+<span class="nv">$curl</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">(</span><span class="s2">"https://wallet.getadcoin.com/api/me"</span><span class="p">);</span>
+
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$curl</span><span class="p">,</span> <span class="nx">CURLOPT_HTTPHEADER</span><span class="p">,</span> <span class="nv">$headers</span><span class="p">);</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$curl</span><span class="p">,</span> <span class="nx">CURLOPT_RETURNTRANSFER</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nb">json_decode</span><span class="p">(</span><span class="nb">curl_exec</span><span class="p">(</span><span class="nv">$curl</span><span class="p">));</span>
+
+<span class="k">return</span> <span class="nv">$result</span><span class="p">;</span>
+</code></pre>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"John Doe"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"john@doe.com"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"premium"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Avenue 1"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"postalCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"21435"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"New York"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"United States"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This endpoint retrieves basic account information.</p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code>GET https://wallet.getadcoin.com/api/me</code></p>
+<h2 id='get-balance'>Get balance</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://wallet.getadcoin.com/api/balance"</span>
+  -H <span class="s2">"X-AUTH-TOKEN: myApiKey"</span>
+</code></pre><pre class="highlight php tab-php"><code><span class="cp">&lt;?php</span>
+
+<span class="nv">$headers</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="s1">'X-AUTH-TOKEN: myApiKey'</span><span class="p">,</span>
+<span class="p">];</span>
+
+<span class="nv">$curl</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">(</span><span class="s2">"https://wallet.getadcoin.com/api/balance"</span><span class="p">);</span>
+
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$curl</span><span class="p">,</span> <span class="nx">CURLOPT_HTTPHEADER</span><span class="p">,</span> <span class="nv">$headers</span><span class="p">);</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$curl</span><span class="p">,</span> <span class="nx">CURLOPT_RETURNTRANSFER</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nb">json_decode</span><span class="p">(</span><span class="nb">curl_exec</span><span class="p">(</span><span class="nv">$curl</span><span class="p">));</span>
+
+<span class="k">return</span> <span class="nv">$result</span><span class="p">;</span>
+</code></pre>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"balance"</span><span class="p">:</span><span class="w"> </span><span class="mi">1234</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This endpoint retrieves the balance.</p>
+<h3 id='http-request-2'>HTTP Request</h3>
+<p><code>GET https://wallet.getadcoin.com/api/balance</code></p>
+<h2 id='get-transactions'>Get transactions</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://wallet.getadcoin.com/api/transactions"</span>
+  -H <span class="s2">"X-AUTH-TOKEN: myApiKey"</span>
+</code></pre><pre class="highlight php tab-php"><code><span class="cp">&lt;?php</span>
+
+<span class="nv">$headers</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="s1">'X-AUTH-TOKEN: myApiKey'</span><span class="p">,</span>
+<span class="p">];</span>
+
+<span class="nv">$curl</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">(</span><span class="s2">"https://wallet.getadcoin.com/api/transactions"</span><span class="p">);</span>
+
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$curl</span><span class="p">,</span> <span class="nx">CURLOPT_HTTPHEADER</span><span class="p">,</span> <span class="nv">$headers</span><span class="p">);</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$curl</span><span class="p">,</span> <span class="nx">CURLOPT_RETURNTRANSFER</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nb">json_decode</span><span class="p">(</span><span class="nb">curl_exec</span><span class="p">(</span><span class="nv">$curl</span><span class="p">));</span>
+
+<span class="k">return</span> <span class="nv">$result</span><span class="p">;</span>
+</code></pre>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AVBhENG4xQ8yMXNp36f731qNWGsdZwzA6A"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"send"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">-30</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"fee"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"confirmations"</span><span class="p">:</span><span class="w"> </span><span class="mi">792</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"blockhash"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3900df4e8b437686cf30fb64667fbcba553fede0a8b2bf1ecc5dbca6c98a6b40"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"blockindex"</span><span class="p">:</span><span class="w"> </span><span class="mi">31</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"blocktime"</span><span class="p">:</span><span class="w"> </span><span class="mi">1515586376</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"txid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"f3f42c35528ece21e58d0be01b6f80839c9ce466ffeb54c83b07c9c100fd2f9b"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"normtxid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"890b5d999ce37ab542a1969c774a8d3d1347700b3d156f506768d046fd75bf6c"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1515609935</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"timereceived"</span><span class="p">:</span><span class="w"> </span><span class="mi">1515609935</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"confirmed"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+<p>This endpoint retrieves transactions.</p>
+<h3 id='http-request-3'>HTTP Request</h3>
+<p><code>GET https://wallet.getadcoin.com/api/balance</code></p>
+<h2 id='pay-adcoin'>Pay AdCoin</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://wallet.getadcoin.com/api/payto"</span>
+  -X POST
+  -H <span class="s2">"X-AUTH-TOKEN: myApiKey"</span>
+  -F <span class="s2">"amount=100"</span>
+  -F <span class="s2">"email=john@doe.com"</span>
+</code></pre><pre class="highlight php tab-php"><code><span class="cp">&lt;?php</span>
+
+<span class="nv">$headers</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="s1">'X-AUTH-TOKEN: myApiKey'</span><span class="p">,</span>
+<span class="p">];</span>
+
+<span class="nv">$curl</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">(</span><span class="s2">"https://wallet.getadcoin.com/api/payto"</span><span class="p">);</span>
+
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$curl</span><span class="p">,</span> <span class="nx">CURLOPT_HTTPHEADER</span><span class="p">,</span> <span class="nv">$headers</span><span class="p">);</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$curl</span><span class="p">,</span> <span class="nx">CURLOPT_RETURNTRANSFER</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$curl</span><span class="p">,</span> <span class="nx">CURLOPT_POST</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+
+<span class="nv">$parameters</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="s1">'amount'</span> <span class="o">=&gt;</span> <span class="mi">100</span><span class="p">,</span>
+  <span class="s1">'email'</span> <span class="o">=&gt;</span> <span class="s1">'john@doe.com'</span><span class="p">,</span>
+<span class="p">];</span>
+
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$curl</span><span class="p">,</span> <span class="nx">CURLOPT_POSTFIELDS</span><span class="p">,</span> <span class="nb">http_build_query</span><span class="p">(</span><span class="nv">$parameters</span><span class="p">));</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nb">json_decode</span><span class="p">(</span><span class="nb">curl_exec</span><span class="p">(</span><span class="nv">$curl</span><span class="p">));</span>
+
+<span class="k">return</span> <span class="nv">$result</span><span class="p">;</span>
+</code></pre>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"transaction"</span><span class="p">:</span><span class="w"> </span><span class="s2">"461ee445734f4fac4a367131b3e6275e7ce7df9fcccc3281edcf2703e8d5a9b9"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This endpoint can be used to pay AdCoin to a email or address.</p>
+
+<aside class="notice">
+Only one of <code>email</code> or <code>address</code> should be given
+</aside>
+<h3 id='http-request-4'>HTTP Request</h3>
+<p><code>POST https://wallet.getadcoin.com/api/payto</code></p>
+<h3 id='url-parameters'>URL Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>amount</td>
+<td>The amount in AdCoin</td>
+</tr>
+<tr>
+<td>email</td>
+<td>E-mail address to pay AdCoin to</td>
+</tr>
+<tr>
+<td>address</td>
+<td>AdCoin address to pay AdCoin to</td>
 </tr>
 </tbody></table>
 <h1 id='payments'>Payments</h1><h2 id='get-all-payments'>Get all payments</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://wallet.getadcoin.com/api/payments"</span>
@@ -425,6 +630,11 @@ You must replace <code>myApiKey</code> with your personal API key.
 <h2 id='create-payment'>Create payment</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://wallet.getadcoin.com/api/payments"</span>
   -X POST
   -H <span class="s2">"X-AUTH-TOKEN: myApiKey"</span>
+  -F <span class="s2">"amount=100"</span>
+  -F <span class="s2">"redirectUrl=https://myapp.com/checkout/status"</span>
+  -F <span class="s2">"webhookUrl=https://myapp.com/checkout/webhook"</span>
+  -F <span class="s2">"description='500 advertisement credits'"</span>
+  -F <span class="s2">"metadata={</span><span class="se">\"</span><span class="s2">name</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">TestUser</span><span class="se">\"</span><span class="s2">}"</span>
 </code></pre><pre class="highlight php tab-php"><code><span class="cp">&lt;?php</span>
 
 <span class="nv">$headers</span> <span class="o">=</span> <span class="p">[</span>
@@ -501,6 +711,263 @@ You must replace <code>myApiKey</code> with your personal API key.
 <td>Metadata for your own reference, included in all further responses</td>
 </tr>
 </tbody></table>
+<h1 id='orders'>Orders</h1><h2 id='get-all-orders'>Get all orders</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://wallet.getadcoin.com/api/orders"</span>
+  -H <span class="s2">"X-AUTH-TOKEN: myApiKey"</span>
+</code></pre><pre class="highlight php tab-php"><code><span class="cp">&lt;?php</span>
+
+<span class="nv">$headers</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="s1">'X-AUTH-TOKEN: myApiKey'</span><span class="p">,</span>
+<span class="p">];</span>
+
+<span class="nv">$curl</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">(</span><span class="s2">"https://wallet.getadcoin.com/api/orders"</span><span class="p">);</span>
+
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$curl</span><span class="p">,</span> <span class="nx">CURLOPT_HTTPHEADER</span><span class="p">,</span> <span class="nv">$headers</span><span class="p">);</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$curl</span><span class="p">,</span> <span class="nx">CURLOPT_RETURNTRANSFER</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nb">json_decode</span><span class="p">(</span><span class="nb">curl_exec</span><span class="p">(</span><span class="nv">$curl</span><span class="p">));</span>
+
+<span class="k">return</span> <span class="nv">$result</span><span class="p">;</span>
+</code></pre>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"euroAmount"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"adCoinAmount"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"createdAt"</span><span class="p">:</span><span class="w"> </span><span class="mi">1511616897</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"euroAmount"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"adCoinAmount"</span><span class="p">:</span><span class="w"> </span><span class="mi">400</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"createdAt"</span><span class="p">:</span><span class="w"> </span><span class="mi">1511617090</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre>
+<p>This endpoint retrieves all orders.</p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code>GET https://wallet.getadcoin.com/api/orders</code></p>
+<h2 id='create-order'>Create order</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://wallet.getadcoin.com/api/orders"</span>
+  -X POST
+  -H <span class="s2">"X-AUTH-TOKEN: myApiKey"</span>
+  -F <span class="s2">"amount=100"</span>
+  -F <span class="s2">"idealIssuer=RABONL2U"</span>
+  -F <span class="s2">"paymentMethod=ideal"</span>
+</code></pre><pre class="highlight php tab-php"><code><span class="cp">&lt;?php</span>
+
+<span class="nv">$headers</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="s1">'X-AUTH-TOKEN: myApiKey'</span><span class="p">,</span>
+<span class="p">];</span>
+
+<span class="nv">$curl</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">(</span><span class="s2">"https://wallet.getadcoin.com/api/orders"</span><span class="p">);</span>
+
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$curl</span><span class="p">,</span> <span class="nx">CURLOPT_HTTPHEADER</span><span class="p">,</span> <span class="nv">$headers</span><span class="p">);</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$curl</span><span class="p">,</span> <span class="nx">CURLOPT_RETURNTRANSFER</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$curl</span><span class="p">,</span> <span class="nx">CURLOPT_POST</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+
+<span class="nv">$parameters</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="s1">'amount'</span> <span class="o">=&gt;</span> <span class="mi">100</span><span class="p">,</span>
+  <span class="s1">'idealIssuer'</span> <span class="o">=&gt;</span> <span class="s1">'RABONL2U'</span><span class="p">,</span>
+  <span class="s1">'paymentMethod'</span> <span class="o">=&gt;</span> <span class="s1">'ideal'</span><span class="p">,</span>
+<span class="p">];</span>
+
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$curl</span><span class="p">,</span> <span class="nx">CURLOPT_POSTFIELDS</span><span class="p">,</span> <span class="nb">http_build_query</span><span class="p">(</span><span class="nv">$parameters</span><span class="p">));</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nb">json_decode</span><span class="p">(</span><span class="nb">curl_exec</span><span class="p">(</span><span class="nv">$curl</span><span class="p">));</span>
+
+<span class="k">return</span> <span class="nv">$result</span><span class="p">;</span>
+</code></pre>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"redirectUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://urlofpaymentprovider.com/thatisusedtopay"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This endpoint creates a order.</p>
+<h3 id='http-request-2'>HTTP Request</h3>
+<p><code>POST https://wallet.getadcoin.com/api/payments</code></p>
+<h3 id='url-parameters'>URL Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>amount</td>
+<td>The amount in euro</td>
+</tr>
+<tr>
+<td>paymentMethod</td>
+<td>One of the paymentmethods returned by <a href="#get-paymentmethods">/paymentmethods</a></td>
+</tr>
+<tr>
+<td>idealIssuer</td>
+<td>iDeal issuer, found in <a href="#get-paymentmethods">/paymentmethods</a> (Only required if paymentMethod is iDeal)</td>
+</tr>
+<tr>
+<td>coin</td>
+<td>Coin to use, found in <a href="#get-paymentmethods">/paymentmethods</a> (Only required if paymentMethod is cryptocurrency)</td>
+</tr>
+</tbody></table>
+<h2 id='get-paymentmethods'>Get paymentmethods</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://wallet.getadcoin.com/api/paymentmethods"</span>
+  -H <span class="s2">"X-AUTH-TOKEN: myApiKey"</span>
+</code></pre><pre class="highlight php tab-php"><code><span class="cp">&lt;?php</span>
+
+<span class="nv">$headers</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="s1">'X-AUTH-TOKEN: myApiKey'</span><span class="p">,</span>
+<span class="p">];</span>
+
+<span class="nv">$curl</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">(</span><span class="s2">"https://wallet.getadcoin.com/api/paymentmethods"</span><span class="p">);</span>
+
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$curl</span><span class="p">,</span> <span class="nx">CURLOPT_HTTPHEADER</span><span class="p">,</span> <span class="nv">$headers</span><span class="p">);</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$curl</span><span class="p">,</span> <span class="nx">CURLOPT_RETURNTRANSFER</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nb">json_decode</span><span class="p">(</span><span class="nb">curl_exec</span><span class="p">(</span><span class="nv">$curl</span><span class="p">));</span>
+
+<span class="k">return</span> <span class="nv">$result</span><span class="p">;</span>
+</code></pre>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"paymentMethods"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"mistercash"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mistercash"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bancontact"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"giropay"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"giropay"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"GiroPay"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"ideal"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ideal"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"iDEAL"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"options"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ABNANL2A"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ABN Amro Bank"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ASNBNL21"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ASN Bank"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BUNQNL2A"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bunq"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"INGBNL2A"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ING"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"KNABNL2H"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Knab"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"RABONL2U"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Rabobank"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"RBRBNL21"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"RegioBank"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SNSBNL2A"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SNS Bank"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"TRIONL2U"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Triodos Bank"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"FVLBNL22"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Van Lanschot Bankiers"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"sofortbanking"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"code"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sofortbanking"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SofortBanking"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"cryptocurrency"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cryptocurrency"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Cryptocurrency"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"options"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"key"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bitcoin"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This endpoint retrieves all payment methods.</p>
+<h3 id='http-request-3'>HTTP Request</h3>
+<p><code>GET https://wallet.getadcoin.com/api/paymentmethods</code></p>
+<h1 id='addresses'>Addresses</h1><h2 id='get-all-addresses'>Get all addresses</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://wallet.getadcoin.com/api/addresses"</span>
+  -H <span class="s2">"X-AUTH-TOKEN: myApiKey"</span>
+</code></pre><pre class="highlight php tab-php"><code><span class="cp">&lt;?php</span>
+
+<span class="nv">$headers</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="s1">'X-AUTH-TOKEN: myApiKey'</span><span class="p">,</span>
+<span class="p">];</span>
+
+<span class="nv">$curl</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">(</span><span class="s2">"https://wallet.getadcoin.com/api/addresses"</span><span class="p">);</span>
+
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$curl</span><span class="p">,</span> <span class="nx">CURLOPT_HTTPHEADER</span><span class="p">,</span> <span class="nv">$headers</span><span class="p">);</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$curl</span><span class="p">,</span> <span class="nx">CURLOPT_RETURNTRANSFER</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nb">json_decode</span><span class="p">(</span><span class="nb">curl_exec</span><span class="p">(</span><span class="nv">$curl</span><span class="p">));</span>
+
+<span class="k">return</span> <span class="nv">$result</span><span class="p">;</span>
+</code></pre>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"addresses"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"AeTJRy6saLLs4SHSHVmPYVTceweLVWyaS4"</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="s2">"hidden"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"AcZXFBs3jPLwqSFvmcG89homfEzu2Njoem"</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This endpoint retrieves all addresses.</p>
+<h3 id='http-request'>HTTP Request</h3>
+<p><code>GET https://wallet.getadcoin.com/api/addresses</code></p>
+<h2 id='create-address'>Create address</h2><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://wallet.getadcoin.com/api/addresses"</span>
+  -X POST
+  -H <span class="s2">"X-AUTH-TOKEN: myApiKey"</span>
+</code></pre><pre class="highlight php tab-php"><code><span class="cp">&lt;?php</span>
+
+<span class="nv">$headers</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="s1">'X-AUTH-TOKEN: myApiKey'</span><span class="p">,</span>
+<span class="p">];</span>
+
+<span class="nv">$curl</span> <span class="o">=</span> <span class="nb">curl_init</span><span class="p">(</span><span class="s2">"https://wallet.getadcoin.com/api/addresses"</span><span class="p">);</span>
+
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$curl</span><span class="p">,</span> <span class="nx">CURLOPT_HTTPHEADER</span><span class="p">,</span> <span class="nv">$headers</span><span class="p">);</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$curl</span><span class="p">,</span> <span class="nx">CURLOPT_RETURNTRANSFER</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+<span class="nb">curl_setopt</span><span class="p">(</span><span class="nv">$curl</span><span class="p">,</span> <span class="nx">CURLOPT_POST</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+
+<span class="nv">$result</span> <span class="o">=</span> <span class="nb">json_decode</span><span class="p">(</span><span class="nb">curl_exec</span><span class="p">(</span><span class="nv">$curl</span><span class="p">));</span>
+
+<span class="k">return</span> <span class="nv">$result</span><span class="p">;</span>
+</code></pre>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AeCy55WtofiCtm21mg3cExiqyfXU2zJFqP"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This endpoint creates a address.</p>
+<h3 id='http-request-2'>HTTP Request</h3>
+<p><code>POST https://wallet.getadcoin.com/api/addresses</code></p>
 
       </div>
       <div class="dark-box">
